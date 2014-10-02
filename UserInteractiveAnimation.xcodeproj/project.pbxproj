@@ -14,6 +14,7 @@
 		C1F515BF19DD72850045FC23 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1F515BE19DD72850045FC23 /* Images.xcassets */; };
 		C1F515C219DD72850045FC23 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1F515C019DD72850045FC23 /* LaunchScreen.xib */; };
 		C1F515CE19DD72850045FC23 /* UserInteractiveAnimationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F515CD19DD72850045FC23 /* UserInteractiveAnimationTests.m */; };
+		C1F515DC19DD73BC0045FC23 /* CALayer+GSAnimationControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F515DB19DD73BC0045FC23 /* CALayer+GSAnimationControl.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		C1F515C719DD72850045FC23 /* UserInteractiveAnimationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UserInteractiveAnimationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1F515CC19DD72850045FC23 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C1F515CD19DD72850045FC23 /* UserInteractiveAnimationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserInteractiveAnimationTests.m; sourceTree = "<group>"; };
+		C1F515DA19DD73BC0045FC23 /* CALayer+GSAnimationControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+GSAnimationControl.h"; sourceTree = "<group>"; };
+		C1F515DB19DD73BC0045FC23 /* CALayer+GSAnimationControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+GSAnimationControl.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +88,8 @@
 				C1F515B619DD72850045FC23 /* AppDelegate.m */,
 				C1F515B819DD72850045FC23 /* ViewController.h */,
 				C1F515B919DD72850045FC23 /* ViewController.m */,
+				C1F515DA19DD73BC0045FC23 /* CALayer+GSAnimationControl.h */,
+				C1F515DB19DD73BC0045FC23 /* CALayer+GSAnimationControl.m */,
 				C1F515BB19DD72850045FC23 /* Main.storyboard */,
 				C1F515BE19DD72850045FC23 /* Images.xcassets */,
 				C1F515C019DD72850045FC23 /* LaunchScreen.xib */,
@@ -221,6 +226,7 @@
 			files = (
 				C1F515BA19DD72850045FC23 /* ViewController.m in Sources */,
 				C1F515B719DD72850045FC23 /* AppDelegate.m in Sources */,
+				C1F515DC19DD73BC0045FC23 /* CALayer+GSAnimationControl.m in Sources */,
 				C1F515B419DD72850045FC23 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
