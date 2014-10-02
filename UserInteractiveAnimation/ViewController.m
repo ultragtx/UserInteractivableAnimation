@@ -17,6 +17,9 @@ static const CFTimeInterval kAnimationDuration = 3;
 
 @property (assign, nonatomic) CFTimeInterval animationProgress;
 
+@property (strong, nonatomic) CADisplayLink *displayLink;
+@property (assign, nonatomic) CFTimeInterval displayLinkStarTime;
+
 @end
 
 @implementation ViewController
@@ -28,12 +31,12 @@ static const CFTimeInterval kAnimationDuration = 3;
     _moveableView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 100)];
     [self.moveableView setBackgroundColor:[UIColor redColor]];
     [self.view addSubview:self.moveableView];
+    [self switchToState1];
     
     // Gesture
     UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
     [self.view addGestureRecognizer:panGesture];
     
-    [self switchToState1];
 }
 
 - (void)switchToState1 {
@@ -46,28 +49,25 @@ static const CFTimeInterval kAnimationDuration = 3;
     [self.moveableView setTag:2];
 }
 
+- (void)switchState {
+    if (self.moveableView.tag == 1) {
+        [self switchToState2];
+    }
+    else {
+        [self switchToState1];
+    }
+}
+
 - (void)handlePanGesture:(UIPanGestureRecognizer *)panGesture {
     if (panGesture.state == UIGestureRecognizerStateBegan) {
         [self.moveableView.layer removeAllAnimations];
         
+        [self.displayLink invalidate];
+        
         [UIView animateWithDuration:kAnimationDuration animations:^{
-            if (self.moveableView.tag == 1) {
-                [self switchToState2];
-            }
-            else {
-                [self switchToState1];
-            }
+            [self switchState];
         } completion:^(BOOL finished) {
-            [self.moveableView.layer gs_recoverToDefaultState];
             
-            if (self.animationProgress <= 0.5) {
-                if (self.moveableView.tag == 1) {
-                    [self switchToState2];
-                }
-                else {
-                    [self switchToState1];
-                }
-            }
         }];
         
         [self.moveableView.layer gs_pauseAnimation];
@@ -86,8 +86,27 @@ static const CFTimeInterval kAnimationDuration = 3;
             [self.moveableView.layer gs_continueAnimationWithTimeProgress:self.animationProgress * kAnimationDuration];
         }
         else {
-            [self.moveableView.layer gs_continueReverseAnimationWithTimeProgress:self.animationProgress * kAnimationDuration animationDuration:kAnimationDuration];
+            [self.displayLink invalidate];
+            
+            self.displayLinkStarTime = CACurrentMediaTime();
+            self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateAnimation:)];
+            [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
         }
+    }
+}
+
+- (void)updateAnimation:(id)sender {
+    CFTimeInterval timeInterval = CACurrentMediaTime() - self.displayLinkStarTime;
+    CFTimeInterval animationTimeProgress = self.animationProgress * kAnimationDuration - timeInterval;
+    
+    if (animationTimeProgress >= 0) {
+        [self.moveableView.layer gs_setTimeProgress:animationTimeProgress];
+    }
+    else {
+        [self.displayLink invalidate];
+        
+        [self.moveableView.layer gs_continueAnimationWithTimeProgress:kAnimationDuration];
+        [self switchState];
     }
 }
 
